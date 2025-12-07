@@ -1,0 +1,715 @@
+/* ============================================
+   LUZ DO DIA - Modern Professional Design
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
+
+:root {
+  --primary: #f59e0b;
+  --primary-light: #fbbf24;
+  --primary-dark: #d97706;
+  --surface: rgba(255, 255, 255, 0.08);
+  --surface-hover: rgba(255, 255, 255, 0.12);
+  --surface-elevated: rgba(255, 255, 255, 0.1);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-muted: rgba(255, 255, 255, 0.5);
+  --border: rgba(255, 255, 255, 0.1);
+  --shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 8px 32px -4px rgba(0, 0, 0, 0.3);
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   APP CONTAINER & BACKGROUNDS
+   ============================================ */
+
+.app {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 20px;
+  padding-top: max(20px, env(safe-area-inset-top));
+  padding-bottom: max(20px, env(safe-area-inset-bottom));
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: background 1s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-x: hidden;
+}
+
+.app.sky-night {
+  background: linear-gradient(165deg, #0c1222 0%, #1a1a2e 40%, #16213e 100%);
+}
+
+.app.sky-dark {
+  background: linear-gradient(165deg, #1e293b 0%, #334155 50%, #475569 100%);
+}
+
+.app.sky-cloudy {
+  background: linear-gradient(165deg, #475569 0%, #64748b 50%, #94a3b8 100%);
+}
+
+.app.sky-clear {
+  background: linear-gradient(165deg, #0369a1 0%, #0ea5e9 40%, #38bdf8 100%);
+}
+
+.container {
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+
+.header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.title-icon {
+  display: inline-block;
+  margin-right: 8px;
+  filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.5));
+}
+
+.date {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: capitalize;
+}
+
+/* ============================================
+   SKY VISUALIZATION
+   ============================================ */
+
+.sky-box {
+  position: relative;
+  height: 180px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.sky-gradient {
+  position: absolute;
+  inset: 0;
+  opacity: 0.3;
+  background: radial-gradient(ellipse at 50% 120%, rgba(255, 200, 100, 0.3) 0%, transparent 60%);
+}
+
+.horizon {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+
+.ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(180deg, transparent 0%, rgba(15, 23, 42, 0.6) 100%);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.ground::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.3), transparent);
+}
+
+/* Sun/Moon */
+.sun {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translate(-50%, -50%);
+}
+
+.sun.day {
+  background: radial-gradient(circle at 30% 30%, #fff9e6, #fcd34d 40%, #f59e0b 80%);
+  box-shadow: 
+    inset -4px -4px 12px rgba(180, 80, 0, 0.3),
+    0 0 60px rgba(251, 191, 36, 0.6),
+    0 0 120px rgba(251, 191, 36, 0.3);
+}
+
+.sun.night {
+  width: 56px;
+  height: 56px;
+  background: radial-gradient(circle at 35% 35%, #f8fafc, #e2e8f0 40%, #94a3b8 90%);
+  box-shadow: 
+    inset -4px -4px 10px rgba(0, 0, 0, 0.2),
+    0 0 40px rgba(226, 232, 240, 0.4),
+    0 0 80px rgba(226, 232, 240, 0.2);
+}
+
+.sun-glow {
+  position: absolute;
+  inset: -50%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.4) 0%, transparent 70%);
+  animation: sunPulse 4s ease-in-out infinite;
+}
+
+/* Clouds */
+.cloud {
+  position: absolute;
+  font-size: 2rem;
+  transition: all 0.8s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  animation: cloudFloat 20s ease-in-out infinite;
+}
+
+.cloud:nth-child(even) {
+  animation-direction: reverse;
+}
+
+/* Weather Effects */
+.rain-drop {
+  position: absolute;
+  width: 2px;
+  height: 16px;
+  background: linear-gradient(180deg, transparent, rgba(147, 197, 253, 0.8));
+  border-radius: 2px;
+  animation: rainFall 0.8s linear infinite;
+}
+
+.snow-flake {
+  position: absolute;
+  font-size: 0.75rem;
+  opacity: 0.9;
+  animation: snowFall 3s linear infinite;
+}
+
+.star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.3);
+  animation: starTwinkle 2s ease-in-out infinite;
+}
+
+/* ============================================
+   TIME DISPLAY
+   ============================================ */
+
+.time {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.time-display {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 3.5rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+
+.card {
+  background: var(--surface);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  background: var(--surface-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+}
+
+.card-title-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 8px var(--primary);
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+/* Toggle Button */
+.btn {
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background: var(--surface-hover);
+  border-color: var(--text-muted);
+}
+
+.btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #000;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+}
+
+/* Weather Display */
+.weather-display {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.weather-icon {
+  font-size: 3rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.weather-info {
+  flex: 1;
+}
+
+.weather-desc {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.weather-detail {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Manual Controls */
+.select {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9375rem;
+  font-family: inherit;
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='rgba(255,255,255,0.5)' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+}
+
+.select option {
+  background: #1e293b;
+  padding: 12px;
+}
+
+.range-container {
+  margin-top: 16px;
+}
+
+.range-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.range-label {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.range-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.range {
+  width: 100%;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.3);
+  appearance: none;
+  cursor: pointer;
+}
+
+.range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.range::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+.range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+/* ============================================
+   LIGHT METER - Hero Component
+   ============================================ */
+
+.light-meter {
+  position: relative;
+  text-align: center;
+  padding: 32px 24px;
+  overflow: hidden;
+  border: none;
+}
+
+.light-meter::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.light-meter.level-0 { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
+.light-meter.level-1 { background: linear-gradient(135deg, #334155 0%, #1e293b 100%); }
+.light-meter.level-2 { background: linear-gradient(135deg, #475569 0%, #334155 100%); }
+.light-meter.level-3 { background: linear-gradient(135deg, #92400e 0%, #78350f 100%); }
+.light-meter.level-4 { background: linear-gradient(135deg, #b45309 0%, #92400e 100%); }
+.light-meter.level-5 { background: linear-gradient(135deg, #d97706 0%, #b45309 100%); }
+
+.light-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.light-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 4.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+.light-value span {
+  font-size: 2rem;
+  font-weight: 500;
+  opacity: 0.7;
+  margin-left: 4px;
+}
+
+.light-desc {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 8px 0 20px;
+}
+
+.light-bar-container {
+  position: relative;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.light-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(90deg, #475569, #fbbf24, #fef3c7);
+  box-shadow: 0 0 16px rgba(251, 191, 36, 0.5);
+}
+
+.light-bar-glow {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  left: 0;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  filter: blur(8px);
+  opacity: 0.5;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   SUN TIMES GRID
+   ============================================ */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.grid-item {
+  background: var(--surface);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius-md);
+  padding: 20px 16px;
+  text-align: center;
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+}
+
+.grid-item:hover {
+  background: var(--surface-hover);
+  transform: translateY(-2px);
+}
+
+.grid-icon {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.grid-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.grid-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ============================================
+   STATUS CARD
+   ============================================ */
+
+.status-card {
+  text-align: center;
+  padding: 24px;
+}
+
+.status-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.status-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.status-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.time-remaining {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+}
+
+.time-remaining-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.time-remaining-unit {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 16px;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.footer-icon {
+  font-size: 0.875rem;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes sunPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes cloudFloat {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(10px); }
+}
+
+@keyframes rainFall {
+  0% { top: -10%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@keyframes snowFall {
+  0% { top: -5%; opacity: 0; transform: translateX(0) rotate(0deg); }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; transform: translateX(20px) rotate(360deg); }
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.8); }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 380px) {
+  .time-display {
+    font-size: 2.75rem;
+  }
+  
+  .light-value {
+    font-size: 3.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .app {
+    padding: 40px;
+  }
+  
+  .container {
+    max-width: 480px;
+  }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
