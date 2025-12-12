@@ -1,70 +1,46 @@
-# Getting Started with Create React App
+# Luz do Dia
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Daylight companion PWA that helps you plan outdoor light, photography windows, and smart alerts. Runs fully in the browser (no backend) and works offline once loaded.
 
-## Available Scripts
+## What it does
+- Shows current daylight conditions with a visual sky meter and estimated exterior light level.
+- Displays sunrise/sunset times and remaining daylight.
+- Hourly light forecast for the next ~12 hours (uses cloud cover + sun position).
+- Photography goal mode (Golden hour, Portrait, Landscape, Long exposure) with tailored tips.
+- Smart alerts: remind before sunset and when light drops below a threshold (with web notifications).
+- Works as a PWA: offline cache, installable, notification click deep-link back to the app.
+- Multi-language UI: Portuguese, English, French (selection is persisted locally).
 
-In the project directory, you can run:
+## How it works
+- Data sources: 
+	- Weather and cloud cover from Open-Meteo API.
+	- Reverse geocoding from Nominatim (OpenStreetMap) to name the current location.
+	- Browser Geolocation to center the forecast (falls back to Lisbon coordinates if blocked).
+- Service Worker: caches static assets and API responses; handles notification clicks to focus/open the app.
+- Light estimate: combines sun elevation (time between sunrise/sunset) with cloud cover and weather code multipliers.
+- Alerts: scheduled client-side in the main app; notifications are shown via the registered service worker when permission is granted.
 
-### `npm start`
+## Running locally
+```bash
+npm install
+npm start
+```
+Then open http://localhost:3000. Notifications require https or localhost.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Tests:
+```bash
+npm test -- --watchAll=false
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Production build:
+```bash
+npm run build
+```
 
-### `npm test`
+## Deployment
+- Auto-deployed to GitHub Pages from the `main` branch via GitHub Actions (`.github/workflows/deploy.yml`).
+- Build uses Node 24 (npm 11) to match the lockfile; output is published to the `gh-pages` branch.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Notes
+- Offline/PWA: once loaded, the app works offline with cached assets and last-known API responses.
+- Permissions: location and notifications are optional but improve accuracy and alert delivery.
