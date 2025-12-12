@@ -21,3 +21,15 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+FETCH_HEAD
+HEAD
+config
+description
+index
+packed-refs
+hooks
+info
+logs
+objects
+refs
+worktrees
