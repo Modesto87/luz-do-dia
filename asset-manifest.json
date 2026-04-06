@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/luz-do-dia/static/css/main.454659ca.css",
+    "main.js": "/luz-do-dia/static/js/main.bf46bd31.js",
+    "static/js/453.c5b8fdbf.chunk.js": "/luz-do-dia/static/js/453.c5b8fdbf.chunk.js",
+    "static/media/background.jpg": "/luz-do-dia/static/media/background.3f057a62f6219c76dd9e.jpg",
+    "index.html": "/luz-do-dia/index.html",
+    "main.454659ca.css.map": "/luz-do-dia/static/css/main.454659ca.css.map",
+    "main.bf46bd31.js.map": "/luz-do-dia/static/js/main.bf46bd31.js.map",
+    "453.c5b8fdbf.chunk.js.map": "/luz-do-dia/static/js/453.c5b8fdbf.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.454659ca.css",
+    "static/js/main.bf46bd31.js"
+  ]
+}
